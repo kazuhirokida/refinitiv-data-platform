@@ -9,13 +9,7 @@ on:
 jobs:
   numpy-test:
     runs-on: ubuntu-latest
-    env:
-      EIKON_API_KEY: ${{secrets.EIKON_API_KEY}}
-      EIKON_LOGIN_ID: ${{secrets.EIKON_LOGIN_ID}}
-      EIKON_LOGIN_PASS: ${{secrets.EIKON_LOGIN_PASS}}
-      EMAIL_SENDER: ${{secrets.EMAIL_SENDER}}
-      EMAIL_RECIPIENT1: ${{secrets.EMAIL_RECIPIENT1}}
-      MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
+
     steps:
       - uses: actions/checkout@v2
       - name: Setup Python
@@ -29,3 +23,10 @@ jobs:
         run: pip install -r requirements.txt
       - name: Run Python
         run: python global-markets.py
+        env:
+          EIKON_API_KEY: ${{secrets.EIKON_API_KEY}}
+          EIKON_LOGIN_ID: ${{secrets.EIKON_LOGIN_ID}}
+          EIKON_LOGIN_PASS: ${{secrets.EIKON_LOGIN_PASS}}
+          EMAIL_SENDER: ${{secrets.EMAIL_SENDER}}
+          EMAIL_RECIPIENT1: ${{secrets.EMAIL_RECIPIENT1}}
+          MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
