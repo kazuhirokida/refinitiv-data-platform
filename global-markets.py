@@ -5,10 +5,10 @@ import requests
 from datetime import datetime, timedelta
 
 rdp.open_platform_session(
-    os.environ[EIKON_API_KEY], 
+    os.environ.get('EIKON_API_KEY'), 
     rdp.GrantPassword(
-        os.environ[EIKON_LOGIN_ID], 
-        os.environ[EIKON_LOGIN_PASS]
+        os.environ.get('EIKON_LOGIN_ID'), 
+        os.environ.get('EIKON_LOGIN_PASS')
     )
 )
 
@@ -152,10 +152,10 @@ df.to_csv('Global_Markets_Update_'+datetime.today().strftime('%Y%m%d')+'.csv',in
 
 response = requests.post(
         'https://api.mailgun.net/v3/mg.dataeditor.work/messages',
-        auth=('api',os.environ[MAILGUN_API_KEY]),
+        auth=('api',os.environ.get('MAILGUN_API_KEY')),
         files=[('attachment',open('Global_Markets_Update_'+datetime.today().strftime('%Y%m%d')+'.csv','rb'))],
-        data={'from':os.environ[EMAIL_SENDER],
-              'to':[os.environ[EMAIL_RECIPIENT1]],
+        data={'from':os.environ.get('EMAIL_SENDER'),
+              'to':[os.environ.get('EMAIL_RECIPIENT1')],
               'subject': '(Test) Global Markets Update '+datetime.today().strftime('%Y-%m-%d'),
               'text': 'Updated at '+datetime.today().strftime('%Y-%m-%d %H:%M')+'UTC'})
 
