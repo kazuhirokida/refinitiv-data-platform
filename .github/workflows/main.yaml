@@ -1,10 +1,8 @@
 name: Global Martkets Update
 
 on:
-  push:
-    branches: 
-      - master
-  workflow_dispatch:
+  schedule:
+    - cron: '0 21 * * 1-5'
 
 jobs:
   build:
