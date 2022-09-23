@@ -26,5 +26,6 @@ jobs:
           EIKON_LOGIN_PASS: ${{secrets.EIKON_LOGIN_PASS}}
           EMAIL_SENDER: ${{secrets.EMAIL_SENDER}}
           EMAIL_RECIPIENT1: ${{secrets.EMAIL_RECIPIENT1}}
+          EMAIL_RECIPIENT2: ${{secrets.EMAIL_RECIPIENT2}}
           MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
         run: python global-markets.py
