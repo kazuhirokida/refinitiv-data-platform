@@ -148,12 +148,12 @@ dic = {
 
 df.columns = df.columns.map(dic)
 
-df.to_csv('Global_Markets_Update_'+datetime.today().strftime('%Y%m%d')+'.csv',index=False,encoding='utf-8-sig',line_terminator='\r\n')
+df.to_csv('data/'+datetime.today().strftime('%Y%m%d')+'_Global_Markets_Update.csv',index=False,encoding='utf-8-sig',line_terminator='\r\n')
 
 response = requests.post(
         'https://api.mailgun.net/v3/mg.dataeditor.work/messages',
         auth=('api',os.environ.get('MAILGUN_API_KEY')),
-        files=[('attachment',open('Global_Markets_Update_'+datetime.today().strftime('%Y%m%d')+'.csv','rb'))],
+        files=[('attachment',open('data/'+datetime.today().strftime('%Y%m%d')+'_Global_Markets_Update.csv','rb'))],
         data={'from':os.environ.get('EMAIL_SENDER'),
               'to':[os.environ.get('EMAIL_RECIPIENT1'),os.environ.get('EMAIL_RECIPIENT2')],
               'subject': 'Global Markets Update '+datetime.today().strftime('%Y-%m-%d'),
