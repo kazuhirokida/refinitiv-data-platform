@@ -155,8 +155,8 @@ response = requests.post(
         auth=('api',os.environ.get('MAILGUN_API_KEY')),
         files=[('attachment',open('Global_Markets_Update_'+datetime.today().strftime('%Y%m%d')+'.csv','rb'))],
         data={'from':os.environ.get('EMAIL_SENDER'),
-              'to':[os.environ.get('EMAIL_RECIPIENT1')],
-              'subject': '(Test) Global Markets Update '+datetime.today().strftime('%Y-%m-%d'),
+              'to':[os.environ.get('EMAIL_RECIPIENT1'),os.environ.get('EMAIL_RECIPIENT2')],
+              'subject': 'Global Markets Update '+datetime.today().strftime('%Y-%m-%d'),
               'text': 'Updated at '+datetime.today().strftime('%Y-%m-%d %H:%M')+'UTC'})
 
 rdp.close_session()
