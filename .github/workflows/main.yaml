@@ -28,3 +28,10 @@ jobs:
           EMAIL_RECIPIENT2: ${{secrets.EMAIL_RECIPIENT2}}
           MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
         run: python global-markets.py
+      - name: Commit
+        run: |
+          git config --global user.email ${{ secrets.EMAIL }}
+          git config --global user.name ${{ secrets.NAME }}
+          git add .
+          git commit -m 'Update csv file'
+          git push origin main
