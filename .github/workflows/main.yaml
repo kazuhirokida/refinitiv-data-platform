@@ -3,6 +3,7 @@ name: Global Martkets Update
 on:
   schedule:
     - cron: '0 21 * * 1-5'
+  workflow_dispatch:
 
 jobs:
   build:
