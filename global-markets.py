@@ -12,7 +12,7 @@ rdp.open_platform_session(
     )
 )
 
-equities = ['.N225','.DJI','.STOXX','.SSEC','.VIX']
+equities = ['.N225','.DJI','.STOXX','.SSEC']
 
 currencies = ['JPY=','EURJPY=','CNY=']
 
