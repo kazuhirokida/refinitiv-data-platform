@@ -22,13 +22,20 @@ commodities = ['CLc1','GCv1']
 
 df = pd.DataFrame()
 for equity in equities:
-  data = rdp.get_historical_price_summaries(
+  daily = rdp.get_historical_price_summaries(
       universe = equity, 
       interval = rdp.Intervals.DAILY,
       count=30,
       fields=['TRDPRC_1']).rename(columns={'TRDPRC_1':equity}).astype(float)
+  latest = rdp.get_historical_price_summaries(
+      universe = equity, 
+      interval = rdp.Intervals.FIVE_MINUTES,
+      count=1,
+      fields=['TRDPRC_1']).rename(columns={'TRDPRC_1':equity}).astype(float)
+  latest.index = latest.index.date.astype('datetime64[ns]')
+  data = daily.append(latest).rename_axis('Date').reset_index().drop_duplicates()
 
-  change = data.diff().iloc[-1,0]
+  change = data.diff()[equity].iloc[-1]
 
   if change > 0:
     direction = '↑'
@@ -39,18 +46,25 @@ for equity in equities:
 
   row = pd.DataFrame([{'Date':direction, equity:abs(change)}])
 
-  data.index = data.index.strftime('%Y/%m/%d')
+  data.Date = data.Date.dt.strftime('%Y/%m/%d')
 
-  df = pd.concat([df,pd.concat([row,data.rename_axis('Date').sort_index(ascending=False).reset_index()],ignore_index=True)],axis=1)
+  df = pd.concat([df,pd.concat([row,data.sort_values('Date',ascending=False)],ignore_index=True)],axis=1)
 
 for currency in ['JPY=','EURJPY=']:
-  data = rdp.get_historical_price_summaries(
+  daily = rdp.get_historical_price_summaries(
       universe = currency, 
       interval = rdp.Intervals.DAILY,
       count=30,
       fields=['BID']).rename(columns={'BID':currency}).astype(float)
+  latest = rdp.get_historical_price_summaries(
+      universe = currency, 
+      interval = rdp.Intervals.FIVE_MINUTES,
+      count=1,
+      fields=['BID']).rename(columns={'BID':currency}).astype(float)
+  latest.index = latest.index.date.astype('datetime64[ns]')
+  data = daily.append(latest).rename_axis('Date').reset_index().drop_duplicates()
 
-  change = data.diff().iloc[-1,0]
+  change = data.diff()[currency].iloc[-1]
 
   if change > 0:
     direction = '↓円安'
@@ -61,17 +75,24 @@ for currency in ['JPY=','EURJPY=']:
 
   row = pd.DataFrame([{'Date':direction, currency:abs(change)}])
 
-  data.index = data.index.strftime('%Y/%m/%d')
+  data.Date = data.Date.dt.strftime('%Y/%m/%d')
 
-  df = pd.concat([df,pd.concat([row,data.rename_axis('Date').sort_index(ascending=False).reset_index()],ignore_index=True)],axis=1)
+  df = pd.concat([df,pd.concat([row,data.sort_values('Date',ascending=False)],ignore_index=True)],axis=1)
 
-data = rdp.get_historical_price_summaries(
+daily = rdp.get_historical_price_summaries(
     universe = 'CNY=', 
     interval = rdp.Intervals.DAILY,
     count=30,
     fields=['BID']).rename(columns={'BID':'CNY='}).astype(float)
+latest = rdp.get_historical_price_summaries(
+    universe = 'CNY=', 
+    interval = rdp.Intervals.FIVE_MINUTES,
+    count=1,
+    fields=['BID']).rename(columns={'BID':'CNY='}).astype(float)
+latest.index = latest.index.date.astype('datetime64[ns]')
+data = daily.append(latest).rename_axis('Date').reset_index().drop_duplicates()
 
-change = data.diff().iloc[-1,0]
+change = data.diff()['CNY='].iloc[-1]
 
 if change > 0:
   direction = '↓元安'
@@ -82,18 +103,25 @@ else:
 
 row = pd.DataFrame([{'Date':direction, 'CNY=':abs(change)}])
 
-data.index = data.index.strftime('%Y/%m/%d')
+data.Date = data.Date.dt.strftime('%Y/%m/%d')
 
-df = pd.concat([df,pd.concat([row,data.rename_axis('Date').sort_index(ascending=False).reset_index()],ignore_index=True)],axis=1)
+df = pd.concat([df,pd.concat([row,data.sort_values('Date',ascending=False)],ignore_index=True)],axis=1)
 
 for treasury in treasuries:
-  data = rdp.get_historical_price_summaries(
+  daily = rdp.get_historical_price_summaries(
       universe = treasury, 
       interval = rdp.Intervals.DAILY,
       count=30,
       fields=['B_YLD_1']).rename(columns={'B_YLD_1':treasury}).astype(float)
+  latest = rdp.get_historical_price_summaries(
+      universe = treasury, 
+      interval = rdp.Intervals.FIVE_MINUTES,
+      count=1,
+      fields=['BID_YIELD']).rename(columns={'BID_YIELD':treasury}).astype(float)
+  latest.index = latest.index.date.astype('datetime64[ns]')
+  data = daily.append(latest).rename_axis('Date').reset_index().drop_duplicates()
 
-  change = data.diff().iloc[-1,0]
+  change = data.diff()[treasury].iloc[-1]
 
   if change > 0:
     direction = '↑'
@@ -104,18 +132,26 @@ for treasury in treasuries:
 
   row = pd.DataFrame([{'Date':direction, treasury:abs(change)}])
 
-  data.index = data.index.strftime('%Y/%m/%d')
+  data.Date = data.Date.dt.strftime('%Y/%m/%d')
 
-  df = pd.concat([df,pd.concat([row,data.rename_axis('Date').sort_index(ascending=False).reset_index()],ignore_index=True)],axis=1)
+  df = pd.concat([df,pd.concat([row,data.sort_values('Date',ascending=False)],ignore_index=True)],axis=1)
 
 for commodity in commodities:
-  data = rdp.get_historical_price_summaries(
+  daily = rdp.get_historical_price_summaries(
       universe = commodity, 
       interval = rdp.Intervals.DAILY,
       count=30,
       fields=['TRDPRC_1']).rename(columns={'TRDPRC_1':commodity}).astype(float)
+  latest = rdp.get_historical_price_summaries(
+      universe = commodity, 
+      interval = rdp.Intervals.FIVE_MINUTES,
+      count=1,
+      fields=['TRDPRC_1']).rename(columns={'TRDPRC_1':commodity}).astype(float)
+  latest.index = latest.index.date.astype('datetime64[ns]')
+  data = daily.append(latest).rename_axis('Date').reset_index().drop_duplicates()
 
-  change = data.diff().iloc[-1,0]
+  change = data.diff()[commodity].iloc[-1]
+
 
   if change > 0:
     direction = '↑'
@@ -126,9 +162,11 @@ for commodity in commodities:
 
   row = pd.DataFrame([{'Date':direction, commodity:abs(change)}])
 
-  data.index = data.index.strftime('%Y/%m/%d')
+  data.Date = data.Date.dt.strftime('%Y/%m/%d')
 
-  df = pd.concat([df,pd.concat([row,data.rename_axis('Date').sort_index(ascending=False).reset_index()],ignore_index=True)],axis=1)
+  df = pd.concat([df,pd.concat([row,data.sort_values('Date',ascending=False)],ignore_index=True)],axis=1)
+
+df = df.iloc[:31]
 
 dic = {
     '.N225':'日経平均',
