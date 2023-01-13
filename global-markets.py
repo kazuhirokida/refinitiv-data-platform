@@ -193,7 +193,16 @@ response = requests.post(
         auth=('api',os.environ.get('MAILGUN_API_KEY')),
         files=[('attachment',open('data/'+datetime.today().strftime('%Y%m%d')+'_Global_Markets_Update.csv','rb'))],
         data={'from':os.environ.get('EMAIL_SENDER'),
-              'to':[os.environ.get('EMAIL_RECIPIENT1'),os.environ.get('EMAIL_RECIPIENT2')],
+              'to':[os.environ.get('EMAIL_RECIPIENT1'),
+                    os.environ.get('EMAIL_RECIPIENT2'),
+                    os.environ.get('EMAIL_RECIPIENT3'),
+                    os.environ.get('EMAIL_RECIPIENT4'),
+                    os.environ.get('EMAIL_RECIPIENT5'),
+                    os.environ.get('EMAIL_RECIPIENT6'),
+                    os.environ.get('EMAIL_RECIPIENT7'),
+                    os.environ.get('EMAIL_RECIPIENT8'),
+                    os.environ.get('EMAIL_RECIPIENT9'),
+                    os.environ.get('EMAIL_RECIPIENT10')],
               'subject': 'Global Markets Update '+datetime.today().strftime('%Y-%m-%d'),
               'text': 'Updated at '+(datetime.today() + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M')+'JST'})
 
