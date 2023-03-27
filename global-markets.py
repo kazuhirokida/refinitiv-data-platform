@@ -204,9 +204,9 @@ response = requests.post(
                     os.environ.get('EMAIL_RECIPIENT9'),
                     os.environ.get('EMAIL_RECIPIENT10'),
                     os.environ.get('EMAIL_RECIPIENT11'),
-                    os.environ.get('EMAIL_RECIPIENT12')
-                    os.environ.get('EMAIL_RECIPIENT13')
-                    os.environ.get('EMAIL_RECIPIENT14')
+                    os.environ.get('EMAIL_RECIPIENT12'),
+                    os.environ.get('EMAIL_RECIPIENT13'),
+                    os.environ.get('EMAIL_RECIPIENT14'),
                     os.environ.get('EMAIL_RECIPIENT15')],
               'subject': 'Global Markets Update '+datetime.today().strftime('%Y-%m-%d'),
               'text': 'Updated at '+(datetime.today() + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M')+'JST'})
