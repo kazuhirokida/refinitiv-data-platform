@@ -186,7 +186,7 @@ dic = {
 
 df.columns = df.columns.map(dic)
 
-df.to_csv('data/'+datetime.today().strftime('%Y%m%d')+'_Global_Markets_Update.csv',index=False,encoding='utf-8-sig',line_terminator='\r\n')
+df.to_csv('data/'+datetime.today().strftime('%Y%m%d')+'_Global_Markets_Update.csv',index=False,encoding='utf-8-sig',lineterminator='\r\n')
 
 response = requests.post(
         'https://api.mailgun.net/v3/mg.dataeditor.work/messages',
