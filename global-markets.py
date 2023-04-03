@@ -33,7 +33,7 @@ for equity in equities:
       count=1,
       fields=['TRDPRC_1']).rename(columns={'TRDPRC_1':equity}).astype(float)
   latest.index = latest.index.date.astype('datetime64[ns]')
-  data = daily.append(latest).rename_axis('Date').reset_index().drop_duplicates()
+  data = pd.concat([daily,latest]).rename_axis('Date').reset_index().drop_duplicates()
 
   change = data.diff()[equity].iloc[-1]
 
@@ -62,7 +62,7 @@ for currency in ['JPY=','EURJPY=']:
       count=1,
       fields=['BID']).rename(columns={'BID':currency}).astype(float)
   latest.index = latest.index.date.astype('datetime64[ns]')
-  data = daily.append(latest).rename_axis('Date').reset_index().drop_duplicates()
+  data = pd.concat([daily,latest]).rename_axis('Date').reset_index().drop_duplicates()
 
   change = data.diff()[currency].iloc[-1]
 
@@ -90,7 +90,7 @@ latest = rdp.get_historical_price_summaries(
     count=1,
     fields=['BID']).rename(columns={'BID':'CNY='}).astype(float)
 latest.index = latest.index.date.astype('datetime64[ns]')
-data = daily.append(latest).rename_axis('Date').reset_index().drop_duplicates()
+data = pd.concat([daily,latest]).rename_axis('Date').reset_index().drop_duplicates()
 
 change = data.diff()['CNY='].iloc[-1]
 
@@ -119,7 +119,7 @@ for treasury in treasuries:
       count=1,
       fields=['BID_YIELD']).rename(columns={'BID_YIELD':treasury}).astype(float)
   latest.index = latest.index.date.astype('datetime64[ns]')
-  data = daily.append(latest).rename_axis('Date').reset_index().drop_duplicates()
+  data = pd.concat([daily,latest]).rename_axis('Date').reset_index().drop_duplicates()
 
   change = data.diff()[treasury].iloc[-1]
 
@@ -148,7 +148,7 @@ for commodity in commodities:
       count=1,
       fields=['TRDPRC_1']).rename(columns={'TRDPRC_1':commodity}).astype(float)
   latest.index = latest.index.date.astype('datetime64[ns]')
-  data = daily.append(latest).rename_axis('Date').reset_index().drop_duplicates()
+  data = pd.concat([daily,latest]).rename_axis('Date').reset_index().drop_duplicates()
 
   change = data.diff()[commodity].iloc[-1]
 
