@@ -42,6 +42,10 @@ jobs:
           EMAIL_RECIPIENT14: ${{secrets.EMAIL_RECIPIENT14}}
           EMAIL_RECIPIENT15: ${{secrets.EMAIL_RECIPIENT15}}
           EMAIL_RECIPIENT16: ${{secrets.EMAIL_RECIPIENT16}}
+          EMAIL_RECIPIENT17: ${{secrets.EMAIL_RECIPIENT17}}
+          EMAIL_RECIPIENT18: ${{secrets.EMAIL_RECIPIENT18}}
+          EMAIL_RECIPIENT19: ${{secrets.EMAIL_RECIPIENT19}}
+          EMAIL_RECIPIENT20: ${{secrets.EMAIL_RECIPIENT20}}
           MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
         run: python global-markets.py
       - name: Commit
